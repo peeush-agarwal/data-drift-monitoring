@@ -1,5 +1,5 @@
 # Ignore the virtual env
-.data-drift-m-env/
+.data-drift-101-env/
 
 # Ignore the evidently generated reports
 evidently/
