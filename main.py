@@ -8,6 +8,15 @@ from evidently.test_suite import TestSuite
 from evidently.test_preset import DataStabilityTestPreset
 from evidently.metric_preset import DataDriftPreset, TargetDriftPreset
 from evidently.report import Report
+from evidently.tests import (
+    TestNumberOfColumnsWithMissingValues,
+    TestNumberOfRowsWithMissingValues,
+    TestNumberOfConstantColumns,
+    TestNumberOfDuplicatedRows,
+    TestNumberOfDuplicatedColumns,
+    TestColumnsType,
+    TestNumberOfDriftedColumns
+)
 
 
 def prepare_data():
@@ -42,6 +51,20 @@ def generate_drift_report(reference, current, file_name):
     drift_report.save_html(file_name)
 
 
+def run_custom_test_suite(reference, current, file_name):
+    tests = TestSuite(tests=[
+        TestNumberOfColumnsWithMissingValues(),
+        TestNumberOfRowsWithMissingValues(),
+        TestNumberOfConstantColumns(),
+        TestNumberOfDuplicatedRows(),
+        TestNumberOfDuplicatedColumns(),
+        TestColumnsType(),
+        TestNumberOfDriftedColumns(),
+    ])
+    tests.run(reference_data=reference, current_data=current)
+    tests.save_html(file_name)
+
+
 if __name__ == "__main__":
     housing_data = prepare_data()
     reference, current = split_data(housing_data)
@@ -49,3 +72,4 @@ if __name__ == "__main__":
     os.makedirs("evidently", exist_ok=True)
     check_data_stability_and_save(reference, current, "evidently/data_stability.html")
     generate_drift_report(reference, current, "evidently/drift_report.html")
+    run_custom_test_suite(reference, current, "evidently/custom_test_suite.html")
