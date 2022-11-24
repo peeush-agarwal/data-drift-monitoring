@@ -6,6 +6,8 @@ from sklearn.datasets import fetch_california_housing
 
 from evidently.test_suite import TestSuite
 from evidently.test_preset import DataStabilityTestPreset
+from evidently.metric_preset import DataDriftPreset, TargetDriftPreset
+from evidently.report import Report
 
 
 def prepare_data():
@@ -31,9 +33,19 @@ def check_data_stability_and_save(reference, current, file_name):
     data_stability.save_html(file_name)
 
 
+def generate_drift_report(reference, current, file_name):
+    drift_report = Report(metrics=[
+        DataDriftPreset(),
+        TargetDriftPreset(),
+    ])
+    drift_report.run(reference_data=reference, current_data=current)
+    drift_report.save_html(file_name)
+
+
 if __name__ == "__main__":
     housing_data = prepare_data()
     reference, current = split_data(housing_data)
 
     os.makedirs("evidently", exist_ok=True)
     check_data_stability_and_save(reference, current, "evidently/data_stability.html")
+    generate_drift_report(reference, current, "evidently/drift_report.html")
