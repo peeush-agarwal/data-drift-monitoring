@@ -3,3 +3,6 @@
 
 # Ignore the evidently generated reports
 evidently/
+
+# Ignore Python-cached files
+__pycache__/
