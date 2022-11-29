@@ -25,6 +25,9 @@ Install `virtualenv` if not already installed, using `pip install virtualenv`
 1. Activate the env using `source .data-drift-e_p_g-env/bin/activate`
 1. Upgrade pip using `pip install --upgrade pip`
 1. Install the dependencies using `pip install -r requirements.txt`
+1. Run the `main.py` script using `python main.py`. This will generate the following dataset files inside `datasets/kdd_k_neighbors_classifier` folder:
+   1. `reference.csv`: Reference or baseline data
+   1. `production.csv`: Production data as for mimicking the real-world scenario
 1. Launch the services to display dashboards, using `docker-compose up -d --build`
 1. Browse [Grafana Dashboard](http://localhost:3000/) here. _Use admin/admin for uname and pwd._
 1. Send HTTP POST request to evidently service using Postman as following:
