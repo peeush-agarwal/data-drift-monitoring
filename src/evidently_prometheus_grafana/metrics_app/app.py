@@ -113,7 +113,6 @@ class MonitoringService:
 
         if dataset_name in self.current:
             current_data = self.current[dataset_name].append(new_rows, ignore_index=True)
-
         else:
             current_data = new_rows
 
@@ -162,7 +161,6 @@ class MonitoringService:
 
             try:
                 found.labels(**labels).set(value)
-
             except ValueError as error:
                 # ignore errors sending other metrics
                 logging.error("Value error for metric %s, error: ", metric_key, error)
